@@ -10,21 +10,32 @@ export async function PATCH(
     const body = await request.json();
     const { status } = body;
 
-    if (!['PENDING', 'DELIVERED', 'CANCELED'].includes(status)) {
-      return NextResponse.json({ error: "Estado inválido" }, { status: 400 });
-    }
-
-    const updatedOrder = await prisma.order.update({
+    const updated = await prisma.order.update({
       where: { id },
-      data: { status }
+      data: { status },
     });
 
-    return NextResponse.json({ order: updatedOrder });
+    return NextResponse.json({ order: updated });
   } catch (error) {
-    console.error("Error updating order status:", error);
-    return NextResponse.json(
-      { error: "Error interno del servidor al actualizar estado" },
-      { status: 500 }
-    );
+    console.error("Error updating order:", error);
+    return NextResponse.json({ error: "Error al actualizar" }, { status: 500 });
+  }
+}
+
+export async function DELETE(
+  request: Request,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  try {
+    const { id } = await params;
+
+    await prisma.order.delete({
+      where: { id },
+    });
+
+    return NextResponse.json({ success: true });
+  } catch (error) {
+    console.error("Error deleting order:", error);
+    return NextResponse.json({ error: "Error al eliminar" }, { status: 500 });
   }
 }

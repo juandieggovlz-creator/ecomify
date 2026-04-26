@@ -1,15 +1,17 @@
 import Navbar from "@/components/Navbar"
 import HeroSection from "@/components/HeroSection"
-import ProblemSolutionSection from "@/components/ProblemSolutionSection"
-import BenefitsSection from "@/components/BenefitsSection"
-import VideoSection from "@/components/VideoSection"
-import TestimonialsSection from "@/components/TestimonialsSection"
-import UrgencySection from "@/components/UrgencySection"
-import OrderForm from "@/components/OrderForm"
-import FeatureScrollSection from "@/components/FeatureScrollSection"
-import WhatsAppButton from "@/components/WhatsAppButton"
+import dynamic from "next/dynamic"
 import { CONFIG } from "@/config/store"
 import { Zap, ShieldCheck, Truck, Clock } from "lucide-react"
+
+const ProblemSolutionSection = dynamic(() => import("@/components/ProblemSolutionSection"), { ssr: false })
+const BenefitsSection = dynamic(() => import("@/components/BenefitsSection"), { ssr: false })
+const VideoSection = dynamic(() => import("@/components/VideoSection"), { ssr: false })
+const TestimonialsSection = dynamic(() => import("@/components/TestimonialsSection"), { ssr: false })
+const UrgencySection = dynamic(() => import("@/components/UrgencySection"), { ssr: false })
+const OrderForm = dynamic(() => import("@/components/OrderForm"), { ssr: false })
+const FeatureScrollSection = dynamic(() => import("@/components/FeatureScrollSection"), { ssr: false })
+const WhatsAppButton = dynamic(() => import("@/components/WhatsAppButton"), { ssr: false })
 
 function TrustBar() {
   const items = [

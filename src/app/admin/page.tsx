@@ -10,7 +10,10 @@ import {
   XCircle,
   Phone,
   MapPin,
-  RefreshCcw
+  RefreshCcw,
+  Trash2,
+  AlertTriangle,
+  ShieldCheck
 } from "lucide-react";
 
 type Order = {
@@ -32,6 +35,13 @@ export default function AdminDashboard() {
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState("");
   const [isUpdating, setIsUpdating] = useState<string | null>(null);
+  const [isDeleting, setIsDeleting] = useState<string | null>(null);
+  const [toast, setToast] = useState<{ msg: string; type: "success" | "error" | "warn" } | null>(null);
+
+  const showToast = (msg: string, type: "success" | "error" | "warn" = "success") => {
+    setToast({ msg, type });
+    setTimeout(() => setToast(null), 3500);
+  };
 
   const fetchOrders = async (searchTerm = "") => {
     try {
@@ -48,64 +58,88 @@ export default function AdminDashboard() {
   };
 
   useEffect(() => {
-    const delayDebounceFn = setTimeout(() => {
-      fetchOrders(search);
-    }, 500); // Debounce search
-    return () => clearTimeout(delayDebounceFn);
+    const delay = setTimeout(() => fetchOrders(search), 500);
+    return () => clearTimeout(delay);
   }, [search]);
 
   const updateStatus = async (id: string, newStatus: string) => {
     setIsUpdating(id);
     try {
       const res = await fetch(`/api/admin/orders/${id}`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ status: newStatus }),
       });
       if (res.ok) {
-        // Actualizar el estado local para reflejar el cambio inmediato
         setOrders(orders.map(o => o.id === id ? { ...o, status: newStatus } : o));
+        showToast("✅ Estado actualizado correctamente");
       } else {
-        alert("Error al actualizar el estado");
+        showToast("Error al actualizar el estado", "error");
       }
-    } catch (error) {
-      console.error(error);
+    } catch {
+      showToast("Error de conexión", "error");
     } finally {
       setIsUpdating(null);
     }
   };
 
-  // Cálculos
-  const totalEarnings = orders
-    .filter(o => o.status === 'DELIVERED')
-    .reduce((sum, o) => sum + o.total, 0);
-  
-  const pendingCount = orders.filter(o => o.status === 'PENDING').length;
-  const deliveredCount = orders.filter(o => o.status === 'DELIVERED').length;
-  const canceledCount = orders.filter(o => o.status === 'CANCELED').length;
-
-  const formatCurrency = (amount: number) => {
-    return new Intl.NumberFormat('es-CO', {
-      style: 'currency',
-      currency: 'COP',
-      minimumFractionDigits: 0
-    }).format(amount);
+  const deleteOrder = async (id: string, orderNumber: string) => {
+    if (!confirm(`¿Eliminar pedido #${orderNumber}? Esta acción no se puede deshacer.`)) return;
+    setIsDeleting(id);
+    try {
+      const res = await fetch(`/api/admin/orders/${id}`, { method: "DELETE" });
+      if (res.ok) {
+        setOrders(orders.filter(o => o.id !== id));
+        showToast(`🗑️ Pedido #${orderNumber} eliminado`, "warn");
+      } else {
+        showToast("Error al eliminar el pedido", "error");
+      }
+    } catch {
+      showToast("Error de conexión", "error");
+    } finally {
+      setIsDeleting(null);
+    }
   };
+
+  const totalEarnings = orders
+    .filter(o => o.status === "DELIVERED")
+    .reduce((sum, o) => sum + o.total, 0);
+
+  const pendingCount = orders.filter(o => o.status === "PENDING").length;
+  const deliveredCount = orders.filter(o => o.status === "DELIVERED").length;
+
+  const formatCurrency = (amount: number) =>
+    new Intl.NumberFormat("es-CO", { style: "currency", currency: "COP", minimumFractionDigits: 0 }).format(amount);
 
   const getStatusBadge = (status: string) => {
     switch (status) {
-      case 'DELIVERED':
-        return <span className="px-2 py-1 bg-green-500/10 text-green-500 rounded-full text-xs font-medium border border-green-500/20 flex items-center gap-1 w-fit"><CheckCircle2 className="w-3 h-3"/> Entregado</span>;
-      case 'CANCELED':
-        return <span className="px-2 py-1 bg-red-500/10 text-red-500 rounded-full text-xs font-medium border border-red-500/20 flex items-center gap-1 w-fit"><XCircle className="w-3 h-3"/> Cancelado</span>;
+      case "DELIVERED":
+        return <span className="px-2 py-1 bg-green-500/10 text-green-500 rounded-full text-xs font-medium border border-green-500/20 flex items-center gap-1 w-fit"><CheckCircle2 className="w-3 h-3"/>Entregado</span>;
+      case "CANCELED":
+        return <span className="px-2 py-1 bg-red-500/10 text-red-500 rounded-full text-xs font-medium border border-red-500/20 flex items-center gap-1 w-fit"><XCircle className="w-3 h-3"/>Cancelado</span>;
       default:
-        return <span className="px-2 py-1 bg-yellow-500/10 text-yellow-500 rounded-full text-xs font-medium border border-yellow-500/20 flex items-center gap-1 w-fit"><Clock className="w-3 h-3"/> Pendiente</span>;
+        return <span className="px-2 py-1 bg-yellow-500/10 text-yellow-500 rounded-full text-xs font-medium border border-yellow-500/20 flex items-center gap-1 w-fit"><Clock className="w-3 h-3"/>Pendiente</span>;
     }
   };
 
   return (
     <div className="space-y-8">
-      {/* Resumen de Estadísticas */}
+
+      {/* Toast de sistema */}
+      {toast && (
+        <div className={`fixed top-6 right-6 z-50 flex items-center gap-3 px-5 py-3.5 rounded-2xl shadow-2xl border text-sm font-semibold transition-all animate-fade-in
+          ${toast.type === "success" ? "bg-neutral-900 border-green-500/40 text-green-400" :
+            toast.type === "warn" ? "bg-neutral-900 border-orange-500/40 text-orange-400" :
+            "bg-neutral-900 border-red-500/40 text-red-400"}`}>
+          {toast.type === "success" ? <ShieldCheck className="w-4 h-4" /> :
+           toast.type === "warn" ? <AlertTriangle className="w-4 h-4" /> :
+           <XCircle className="w-4 h-4" />}
+          <span>{toast.msg}</span>
+          <span className="text-[10px] text-neutral-500 ml-2">— Sistema Ecomify</span>
+        </div>
+      )}
+
+      {/* Estadísticas */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         <div className="bg-neutral-900 border border-neutral-800 p-5 rounded-2xl flex items-center gap-4">
           <div className="p-3 bg-orange-500/10 rounded-xl border border-orange-500/20 text-orange-500">
@@ -145,13 +179,13 @@ export default function AdminDashboard() {
         </div>
       </div>
 
-      {/* Acciones y Búsqueda */}
+      {/* Búsqueda */}
       <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
         <h2 className="text-xl font-bold text-white">Registro de Pedidos</h2>
         <div className="relative w-full sm:w-96">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-neutral-400" />
-          <input 
-            type="text" 
+          <input
+            type="text"
             placeholder="Buscar por nombre, teléfono o # pedido..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
@@ -160,7 +194,7 @@ export default function AdminDashboard() {
         </div>
       </div>
 
-      {/* Tabla de Datos */}
+      {/* Tabla */}
       <div className="bg-neutral-900 border border-neutral-800 rounded-2xl overflow-hidden shadow-sm">
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse">
@@ -190,7 +224,7 @@ export default function AdminDashboard() {
                 </tr>
               ) : (
                 orders.map((order) => (
-                  <tr key={order.id} className="border-b border-neutral-800/50 hover:bg-neutral-800/30 transition-colors">
+                  <tr key={order.id} className={`border-b border-neutral-800/50 hover:bg-neutral-800/30 transition-colors ${isDeleting === order.id ? "opacity-40" : ""}`}>
                     <td className="p-4">
                       <span className="font-mono text-sm text-neutral-300">#{order.orderNumber}</span>
                       <p className="text-xs text-neutral-500 mt-1">{new Date(order.createdAt).toLocaleDateString()}</p>
@@ -209,17 +243,13 @@ export default function AdminDashboard() {
                         {order.address}
                       </div>
                     </td>
-                    <td className="p-4 font-medium text-white">
-                      {formatCurrency(order.total)}
-                    </td>
-                    <td className="p-4">
-                      {getStatusBadge(order.status)}
-                    </td>
+                    <td className="p-4 font-medium text-white">{formatCurrency(order.total)}</td>
+                    <td className="p-4">{getStatusBadge(order.status)}</td>
                     <td className="p-4">
                       <div className="flex items-center gap-2">
-                        <select 
+                        <select
                           value={order.status}
-                          disabled={isUpdating === order.id}
+                          disabled={isUpdating === order.id || isDeleting === order.id}
                           onChange={(e) => updateStatus(order.id, e.target.value)}
                           className="bg-neutral-800 border border-neutral-700 text-white text-xs rounded-lg px-2 py-1.5 focus:outline-none focus:border-orange-500 disabled:opacity-50"
                         >
@@ -227,7 +257,19 @@ export default function AdminDashboard() {
                           <option value="DELIVERED">Entregado</option>
                           <option value="CANCELED">Cancelado</option>
                         </select>
+
                         {isUpdating === order.id && <RefreshCcw className="w-4 h-4 text-orange-500 animate-spin" />}
+
+                        <button
+                          onClick={() => deleteOrder(order.id, order.orderNumber)}
+                          disabled={isDeleting === order.id || isUpdating === order.id}
+                          title="Eliminar reserva"
+                          className="p-1.5 rounded-lg bg-red-500/10 border border-red-500/20 text-red-400 hover:bg-red-500/20 hover:text-red-300 transition-all disabled:opacity-40"
+                        >
+                          {isDeleting === order.id
+                            ? <RefreshCcw className="w-3.5 h-3.5 animate-spin" />
+                            : <Trash2 className="w-3.5 h-3.5" />}
+                        </button>
                       </div>
                     </td>
                   </tr>
