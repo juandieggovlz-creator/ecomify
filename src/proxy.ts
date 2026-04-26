@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
-export function middleware(req: NextRequest) {
+export function proxy(req: NextRequest) {
   // Solo aplicamos protección a /admin (excluyendo /admin/login) y /api/admin (excluyendo /api/admin/login)
   const isApiAuth = req.nextUrl.pathname.startsWith('/api/admin/login') || req.nextUrl.pathname.startsWith('/api/admin/logout');
   const isPageAuth = req.nextUrl.pathname.startsWith('/admin/login');
