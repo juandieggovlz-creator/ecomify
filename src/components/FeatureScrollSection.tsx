@@ -88,7 +88,7 @@ export default function FeatureScrollSection() {
                     src={feature.image} 
                     alt={feature.title} 
                     loading="lazy"
-                    className="w-full h-80 object-cover block transition-transform duration-700 group-hover:scale-110" 
+                    className="w-full h-72 md:h-[520px] object-cover block transition-transform duration-700 group-hover:scale-110" 
                   />
                 </div>
               </motion.div>
