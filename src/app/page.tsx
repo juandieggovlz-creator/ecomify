@@ -4,14 +4,14 @@ import dynamic from "next/dynamic"
 import { CONFIG } from "@/config/store"
 import { Zap, ShieldCheck, Truck, Clock } from "lucide-react"
 
-const ProblemSolutionSection = dynamic(() => import("@/components/ProblemSolutionSection"), { ssr: false })
-const BenefitsSection = dynamic(() => import("@/components/BenefitsSection"), { ssr: false })
-const VideoSection = dynamic(() => import("@/components/VideoSection"), { ssr: false })
-const TestimonialsSection = dynamic(() => import("@/components/TestimonialsSection"), { ssr: false })
-const UrgencySection = dynamic(() => import("@/components/UrgencySection"), { ssr: false })
-const OrderForm = dynamic(() => import("@/components/OrderForm"), { ssr: false })
-const FeatureScrollSection = dynamic(() => import("@/components/FeatureScrollSection"), { ssr: false })
-const WhatsAppButton = dynamic(() => import("@/components/WhatsAppButton"), { ssr: false })
+const ProblemSolutionSection = dynamic(() => import("@/components/ProblemSolutionSection"))
+const BenefitsSection = dynamic(() => import("@/components/BenefitsSection"))
+const VideoSection = dynamic(() => import("@/components/VideoSection"))
+const TestimonialsSection = dynamic(() => import("@/components/TestimonialsSection"))
+const UrgencySection = dynamic(() => import("@/components/UrgencySection"))
+const OrderForm = dynamic(() => import("@/components/OrderForm"))
+const FeatureScrollSection = dynamic(() => import("@/components/FeatureScrollSection"))
+const WhatsAppButton = dynamic(() => import("@/components/WhatsAppButton"))
 
 function TrustBar() {
   const items = [
