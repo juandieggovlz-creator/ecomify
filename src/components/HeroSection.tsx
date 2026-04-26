@@ -102,8 +102,7 @@ export default function HeroSection() {
               transition={{ duration: 0.6, delay: 0.2 }}
               className="relative"
             >
-              <div className="absolute inset-0 bg-primary/20 rounded-[3rem] -rotate-2 scale-95 blur-sm" />
-              <div className="relative z-10 w-full overflow-hidden rounded-[2.5rem] shadow-2xl border-4 border-surface bg-surface">
+              <div className="relative z-10 w-full overflow-hidden rounded-[2.5rem] shadow-2xl border-4 border-white/10 bg-neutral-900">
                 <video
                   src="/videos/video3d.mp4"
                   autoPlay
@@ -111,9 +110,8 @@ export default function HeroSection() {
                   loop
                   playsInline
                   preload="auto"
-                  className="w-full h-auto block scale-[1.08] origin-top mix-blend-screen"
+                  className="w-full h-auto block"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-transparent to-transparent pointer-events-none" />
               </div>
             </motion.div>
           </div>
