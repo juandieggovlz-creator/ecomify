@@ -48,7 +48,7 @@ export default function VideoSection() {
                 muted
                 loop
                 playsInline
-                preload="auto"
+                preload="none"
                 disablePictureInPicture
                 className="absolute inset-0 w-full h-full object-cover"
               >

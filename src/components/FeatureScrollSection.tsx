@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion"
 import { Zap, CheckCircle2 } from "lucide-react"
+import Image from "next/image"
 
 const features = [
   {
@@ -82,11 +83,13 @@ export default function FeatureScrollSection() {
                 className="flex-1 relative group"
               >
                 <div className="absolute inset-0 bg-primary/20 rounded-[3rem] blur-3xl group-hover:bg-primary/30 transition-colors" />
-                <div className="relative rounded-[2.5rem] overflow-hidden border-4 border-surface shadow-2xl">
-                  <img 
+                <div className="relative rounded-[2.5rem] overflow-hidden border-4 border-surface shadow-2xl aspect-square bg-surface">
+                  <Image 
                     src={feature.image} 
                     alt={feature.title} 
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
+                    fill
+                    sizes="(max-width: 768px) 100vw, 50vw"
+                    className="object-cover transition-transform duration-700 group-hover:scale-110" 
                   />
                 </div>
               </motion.div>
