@@ -46,7 +46,7 @@ export default function Navbar() {
           <div className="w-14 h-14 overflow-hidden rounded-xl flex items-center justify-center bg-transparent group-hover:rotate-6 transition-transform duration-300">
             <img src="/images/Logo Ecomify.jpeg" alt="Logo" className="w-full h-full object-contain" />
           </div>
-          <span className="text-2xl font-black tracking-tighter uppercase italic text-foreground group-hover:text-primary transition-colors">
+          <span className="hidden sm:block text-2xl font-black tracking-tighter uppercase italic text-foreground group-hover:text-primary transition-colors">
             {CONFIG.storeName}
           </span>
         </div>
@@ -66,10 +66,10 @@ export default function Navbar() {
 
           <a
             href="#order-form"
-            className="flex items-center gap-2 px-8 py-3.5 bg-primary text-white font-black rounded-2xl hover:bg-primary-dark hover:scale-105 active:scale-95 transition-all shadow-[0_10px_30px_-10px_rgba(249,115,22,0.5)] uppercase tracking-widest text-xs italic border border-orange-400/20"
+            className="flex items-center gap-2 px-4 py-2 sm:px-8 sm:py-3.5 bg-primary text-white font-black rounded-xl sm:rounded-2xl hover:bg-primary-dark hover:scale-105 active:scale-95 transition-all shadow-[0_10px_30px_-10px_rgba(249,115,22,0.5)] uppercase tracking-widest text-[10px] sm:text-xs italic border border-orange-400/20 text-center"
           >
-            <ShoppingCart className="w-4 h-4" />
-            Comprar ahora
+            <ShoppingCart className="w-4 h-4 shrink-0" />
+            <span>Comprar<br className="sm:hidden" /> ahora</span>
           </a>
         </div>
       </div>

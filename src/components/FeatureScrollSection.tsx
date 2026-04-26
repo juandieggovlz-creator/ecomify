@@ -7,12 +7,12 @@ const features = [
   {
     title: "Vista Frontal Premium",
     desc: "Diseño minimalista que se integra perfectamente en cualquier pared sin ocupar espacio innecesario.",
-    image: "/images/imagen frontal.jpeg",
+    image: "/images/imagen-frontal.jpeg",
   },
   {
     title: "Giro de 180 Grados",
     desc: "Ajusta la dirección de tus conexiones con total libertad. El brazo giratorio llega donde otros no pueden.",
-    image: "/images/180 grados.jpeg",
+    image: "/images/180-grados.jpeg",
   },
   {
     title: "Máxima Rotación",
@@ -22,7 +22,7 @@ const features = [
   {
     title: "Carga Inteligente",
     desc: "Equipado con puertos USB-A y USB-C de carga rápida para todos tus dispositivos modernos.",
-    image: "/images/lado usb y tipo c .jpeg",
+    image: "/images/lado-usb-y-tipo-c.jpeg",
   }
 ]
 

@@ -110,6 +110,7 @@ export default function HeroSection() {
                   muted
                   loop
                   playsInline
+                  preload="auto"
                   className="w-full h-auto block scale-[1.08] origin-top mix-blend-screen"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-transparent to-transparent pointer-events-none" />
