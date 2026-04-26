@@ -102,7 +102,7 @@ export default function HeroSection() {
               transition={{ duration: 0.6, delay: 0.2 }}
               className="relative"
             >
-              <div className="relative z-10 w-full overflow-hidden rounded-[2.5rem] shadow-2xl border-4 border-white/10 bg-neutral-900 max-h-[340px] md:max-h-[560px]">
+              <div className="relative z-10 w-full overflow-hidden rounded-[2.5rem] shadow-2xl border-4 border-white/10 bg-neutral-900" style={{clipPath: 'inset(0 0 48px 0 round 1.5rem)'}}>
                 <video
                   src="/videos/video3d.mp4"
                   autoPlay
