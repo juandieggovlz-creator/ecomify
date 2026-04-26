@@ -83,13 +83,12 @@ export default function FeatureScrollSection() {
                 className="flex-1 relative group"
               >
                 <div className="absolute inset-0 bg-primary/20 rounded-[3rem] blur-3xl group-hover:bg-primary/30 transition-colors" />
-                <div className="relative rounded-[2.5rem] overflow-hidden border-4 border-surface shadow-2xl aspect-square bg-surface">
+                <div className="relative rounded-[2.5rem] overflow-hidden border-4 border-surface shadow-2xl bg-surface">
                   <img 
                     src={feature.image} 
                     alt={feature.title} 
                     loading="lazy"
-                    decoding="async"
-                    className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
+                    className="w-full h-80 object-cover block transition-transform duration-700 group-hover:scale-110" 
                   />
                 </div>
               </motion.div>
