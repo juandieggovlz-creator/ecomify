@@ -70,7 +70,7 @@ export default function OrderForm() {
   const onSubmit = async (data: FormValues) => {
     setIsSubmitting(true)
     try {
-      const response = await fetch("/api/create-order", {
+      const response = await fetch("/api/order", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ ...data, quantity }),

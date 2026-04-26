@@ -76,7 +76,7 @@ export async function POST(request: Request) {
 
     // 4. Enviar notificación a Telegram
     try {
-      const rawToken = process.env.TELEGRAM_TOKEN
+      const rawToken = process.env.TELEGRAM_BOT_TOKEN
       const rawChatId = process.env.TELEGRAM_CHAT_ID
 
       const token = rawToken?.replace(/"/g, '')
