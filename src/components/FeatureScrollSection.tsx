@@ -80,15 +80,16 @@ export default function FeatureScrollSection() {
                 whileInView={{ opacity: 1, scale: 1, rotate: 0 }}
                 transition={{ duration: 0.8, ease: "easeOut" }}
                 viewport={{ once: true, margin: "-100px" }}
-                className="flex-1 relative group"
+                className="flex-1 relative group w-full max-w-lg mx-auto"
               >
-                <div className="absolute inset-0 bg-primary/20 rounded-[3rem] blur-3xl group-hover:bg-primary/30 transition-colors" />
-                <div className="w-full rounded-[2rem] overflow-hidden border-2 border-white/10 shadow-2xl">
+                {/* Reduced glow to avoid pinkish tone */}
+                <div className="absolute inset-0 bg-primary/10 rounded-[3rem] blur-2xl group-hover:bg-primary/20 transition-colors pointer-events-none" />
+                <div className="w-full rounded-[2rem] overflow-hidden border border-white/10 shadow-2xl bg-neutral-900 ring-1 ring-white/5">
                   <img 
                     src={feature.image} 
                     alt={feature.title} 
                     loading="lazy"
-                    className="w-full h-auto block" 
+                    className="w-full h-auto block hover:scale-105 transition-transform duration-700 brightness-110" 
                   />
                 </div>
               </motion.div>

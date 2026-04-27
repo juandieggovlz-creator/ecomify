@@ -11,12 +11,12 @@ export default function HeroSection() {
 
   return (
     <section className="relative overflow-hidden bg-background pt-32 pb-16 lg:pt-48 lg:pb-32 transition-colors duration-300">
-      {/* Decorative background elements */}
-      <div className="absolute top-0 right-0 -translate-y-1/2 translate-x-1/4 w-[500px] h-[500px] bg-primary/5 dark:bg-primary/5 rounded-full blur-[120px] pointer-events-none" />
-      <div className="absolute bottom-0 left-0 translate-y-1/2 -translate-x-1/4 w-[500px] h-[500px] bg-primary/5 dark:bg-primary/5 rounded-full blur-[120px] pointer-events-none" />
+      {/* Decorative background elements - Reduced for better clarity */}
+      <div className="absolute top-0 right-0 -translate-y-1/2 translate-x-1/4 w-[300px] h-[300px] bg-primary/5 dark:bg-primary/5 rounded-full blur-[100px] pointer-events-none" />
+      <div className="absolute bottom-0 left-0 translate-y-1/2 -translate-x-1/4 w-[300px] h-[300px] bg-primary/5 dark:bg-primary/5 rounded-full blur-[100px] pointer-events-none" />
 
       <div className="container mx-auto px-4 relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center max-w-6xl mx-auto">
           {/* Content */}
           <div className="text-center lg:text-left">
             <motion.div
@@ -34,7 +34,7 @@ export default function HeroSection() {
                 <span className="text-gradient">toma giratoria extensible</span>
               </h1>
               
-              <p className="mb-8 text-lg text-muted leading-relaxed max-w-xl mx-auto lg:mx-0">
+              <p className="mb-8 text-lg text-muted leading-relaxed max-w-xl mx-auto lg:mx-0 font-medium">
                 El <strong className="text-foreground">{CONFIG.productName}</strong> es la solución definitiva para espacios reducidos. Se extiende de 40cm a 60cm y gira 180° para adaptarse perfectamente detrás de tus muebles.
               </p>
 
@@ -50,9 +50,9 @@ export default function HeroSection() {
                     initial={{ opacity: 0, x: -20 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ delay: 0.2 + (i * 0.1) }}
-                    className="flex items-center gap-3 justify-center lg:justify-start p-2 rounded-lg hover:bg-neutral-900/50 transition-colors border border-transparent hover:border-orange-500/10"
+                    className="flex items-center gap-3 justify-center lg:justify-start p-2 rounded-lg hover:bg-neutral-900/50 transition-colors border border-transparent hover:border-primary/10"
                   >
-                    <CheckCircle className="w-5 h-5 text-primary shrink-0 drop-shadow-[0_0_8px_rgba(249,115,22,0.5)]" />
+                    <CheckCircle className="w-5 h-5 text-primary shrink-0" />
                     <span className="text-muted font-medium">{item}</span>
                   </motion.div>
                 ))}
@@ -61,19 +61,19 @@ export default function HeroSection() {
               {/* Pricing */}
               <div className="flex items-center justify-center lg:justify-start gap-6 mb-10 flex-wrap">
                 <div className="flex flex-col items-start">
-                  <span className="text-lg text-muted line-through mb-[-4px]">{CONFIG.compareAtPriceFormatted}</span>
-                  <span className="text-5xl font-black text-primary tracking-tighter">{CONFIG.productPriceFormatted}</span>
+                  <span className="text-lg text-muted line-through mb-[-4px] opacity-70">{CONFIG.compareAtPriceFormatted}</span>
+                  <span className="text-5xl font-black text-primary tracking-tighter drop-shadow-[0_0_15px_rgba(249,115,22,0.3)]">{CONFIG.productPriceFormatted}</span>
                 </div>
                 <div className="bg-danger/10 text-danger border border-danger/20 px-4 py-2 rounded-xl font-black text-sm animate-pulse flex items-center gap-2">
                   <TrendingUp className="w-4 h-4" />
-                  -31% HOY
+                  -{Math.round(((CONFIG.compareAtPrice - CONFIG.productPrice) / CONFIG.compareAtPrice) * 100)}% HOY
                 </div>
               </div>
 
               <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
                 <a
                   href="#order-form"
-                  className="w-full sm:w-auto flex items-center justify-center gap-3 px-10 py-5 text-xl font-black text-white bg-primary rounded-2xl hover:bg-primary-dark transition-all shadow-[0_0_40px_rgba(249,115,22,0.3)] active:scale-95 group border border-orange-400/20"
+                  className="w-full sm:w-auto flex items-center justify-center gap-3 px-10 py-5 text-xl font-black text-white bg-primary rounded-2xl hover:bg-primary-dark transition-all shadow-[0_20px_40px_-10px_rgba(249,115,22,0.5)] active:scale-95 group border border-orange-400/20"
                 >
                   <ShoppingCart className="w-6 h-6" />
                   Pedir ahora — Pagar al Recibir
@@ -95,14 +95,14 @@ export default function HeroSection() {
           </div>
 
           {/* 3D Product Video */}
-          <div className="relative group w-full max-w-xl mx-auto">
+          <div className="relative group w-full max-w-lg mx-auto">
             <motion.div
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.6, delay: 0.2 }}
               className="relative"
             >
-              <div className="relative z-10 w-full overflow-hidden rounded-[2.5rem] shadow-2xl border-4 border-white/10 bg-neutral-900" style={{clipPath: 'inset(0 0 48px 0 round 1.5rem)'}}>
+              <div className="relative z-10 w-full overflow-hidden rounded-[2.5rem] shadow-2xl border border-white/10 bg-neutral-900 ring-1 ring-white/5" style={{clipPath: 'inset(0 0 48px 0 round 1.5rem)'}}>
                 <video
                   src="/videos/video3d.mp4"
                   autoPlay
@@ -110,7 +110,7 @@ export default function HeroSection() {
                   loop
                   playsInline
                   preload="auto"
-                  className="w-full h-auto block"
+                  className="w-full h-auto block brightness-110 contrast-105"
                 />
               </div>
             </motion.div>

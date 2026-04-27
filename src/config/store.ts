@@ -6,10 +6,10 @@ export const CONFIG = {
   productDescription: "Extensor de enchufe ajustable y giratorio para lugares de difícil acceso. Con USB-A, USB-C y 2 tomas de corriente.",
   
   // Precios
-  productPrice: 89900,
-  productPriceFormatted: "$ 89.900",
-  compareAtPrice: 129900,
-  compareAtPriceFormatted: "$ 129.900",
+  productPrice: 119900,
+  productPriceFormatted: "$ 119.900",
+  compareAtPrice: 169900,
+  compareAtPriceFormatted: "$ 169.900",
   
   // WhatsApp
   waNumber: "573242063393",
